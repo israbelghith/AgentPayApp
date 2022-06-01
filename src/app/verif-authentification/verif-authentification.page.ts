@@ -37,7 +37,7 @@ export class VerifAuthentificationPage implements OnInit {
 
     this.authentifierService.connection(this.utilisateur).subscribe((data) => {
       this.paiementService.deleteAll();
-      this.authService.logout();
+      this.authService.logoutVerif();
       const jwToken = data.headers.get('Authorization');
       this.authentifierService.saveToken(jwToken);
       this.utilisateurService

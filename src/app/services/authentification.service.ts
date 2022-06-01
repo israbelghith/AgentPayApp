@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Agent } from '../model/agent.model';
 import { Utilisateur } from '../model/utilisateur.model';
 
 @Injectable({
@@ -23,8 +24,8 @@ export class AuthentificationService {
   constructor(private router: Router,
     private http: HttpClient) { }
 
-  connection(user: Utilisateur) {
-    return this.http.post<Utilisateur>(this.apiURL + '/login', user, { observe: 'response' });
+  connection(user: any) {
+  return this.http.post<Agent>(this.apiURL + '/login', user, { observe: 'response' });
   }
   saveToken(jwt: string) {
     localStorage.setItem('jwt', jwt);
@@ -61,14 +62,25 @@ export class AuthentificationService {
     this.isloggedIn = false;
     localStorage.removeItem('jwt');
    // this.router.navigate(['/authentification']);
+    this.router.navigate(['/authentification']).then(()=>{
+      window.location.reload();});
+  }
 
-   // this.router.navigate(['/authentification']).then(()=>{
-   //   window.location.reload();});
+  logoutVerif() {
+    this.loggedUser = undefined;
+    this.role = undefined;
+    this.secteur=undefined;
+    this.token = undefined;
+    this.isloggedIn = false;
+    localStorage.removeItem('jwt');
+   // this.router.navigate(['/authentification']);
+    /*this.router.navigate(['/authentification']).then(()=>{
+      window.location.reload();});*/
   }
   decodeJWT() {
     if (this.token === undefined)
       {return false;}
-    const decodedToken = this.helper.decodeToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaWxhbmlCZWxnaGl0aEBnbWFpbC5jb20iLCJyb2xlIjpbImFnZW50Il0sImV4cCI6MTY1MzYyMDY5M30.4UBMLBzAZVmQa4iWfjJwqbMGn7YMzmy8j1wAhY9Mgj0');
+    const decodedToken = this.helper.decodeToken(this.token);
     this.role = decodedToken.role;
     this.secteur=decodedToken.secteur;
     console.log(this.secteur);

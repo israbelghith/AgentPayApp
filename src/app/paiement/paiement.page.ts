@@ -6,6 +6,8 @@ import { Agent } from '../model/agent.model';
 import { Facture } from '../model/facture.model';
 import { Paiement } from '../model/paiement.model';
 import { PaiementService } from '../services/paiement.service';
+import { UtilisateurService } from '../services/utilisateur.service';
+import { AuthentificationService } from '../services/authentification.service';
 
 @Component({
   selector: 'app-paiement',
@@ -33,7 +35,11 @@ export class PaiementPage implements OnInit {
      // private agentService: AgentService,
       private toast: ToastController,
       private dataService: DataService,
-      private actionSheetCtrl: ActionSheetController
+      private actionSheetCtrl: ActionSheetController,
+      public authService: AuthentificationService,
+    private utilisateurService: UtilisateurService,
+    public actionSheetController: ActionSheetController,
+
     ) {}
 
     ngOnInit() {
@@ -100,5 +106,60 @@ export class PaiementPage implements OnInit {
 
  }
 
+ paiement(){
+  this.router.navigateByUrl('/facture');
+}
+historique(){
+  this.router.navigateByUrl('/historique-paiement');
+}
 
+acceuil(){
+  this.router.navigateByUrl('/folder/:id');
+
+}
+modifierProfile(){
+  this.router.navigateByUrl('/modifier-profile');
+
+}
+
+async presentActionSheet() {
+  const actionSheet = await this.actionSheetController.create({
+    header: 'A propos',
+
+    cssClass: 'my-custom-class',
+    buttons: [
+      {
+        text: 'Modifier profil',
+        icon: 'person-add-outline',
+        data: 5,
+        handler: () => {
+          this.router.navigateByUrl('/modifier-profile');
+        }
+      },
+      {
+      text: 'Deconnexion',
+      icon: 'log-out-outline',
+      data: 5,
+      handler: () => {
+        this.authService.logout();
+        this.paiementService.deleteAll();
+        this.router.navigateByUrl('/authentification');
+      },
+
+    },
+
+    {
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }]
+  });
+  await actionSheet.present();
+
+  const { role, data } = await actionSheet.onDidDismiss();
+  console.log('onDidDismiss resolved with role and data', role, data);
+}
 }

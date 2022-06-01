@@ -6,12 +6,13 @@ import { PaiementService } from './../services/paiement.service';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { Facture } from '../model/facture.model';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { PaiementPage } from '../paiement/paiement.page';
 import { FactureService } from '../services/facture.service';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../services/authentification.service';
 import { Paiement } from '../model/paiement.model';
+import { UtilisateurService } from '../services/utilisateur.service';
 
 
 @Component({
@@ -39,7 +40,10 @@ export class FacturePage implements OnInit {
     private factureService: FactureService,
     private router: Router,
     private authentificationService: AuthentificationService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public authService: AuthentificationService,
+    private utilisateurService: UtilisateurService,
+    public actionSheetController: ActionSheetController
   ) {
     this.listeReference = [
       { label: 'Référence Facture', value: 1, isSelected: false },
@@ -220,4 +224,62 @@ this.paiement.agent= this.dataService.getAgent();
     console.log('la liste: ', listchercher);
     this.listData = listchercher;
   }
+
+  paiements(){
+    this.router.navigateByUrl('/facture');
+  }
+  historique(){
+    this.router.navigateByUrl('/historique-paiement');
+  }
+
+  acceuil(){
+    this.router.navigateByUrl('/folder/:id');
+
+  }
+  modifierProfile(){
+    this.router.navigateByUrl('/modifier-profile');
+
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'A propos',
+
+      cssClass: 'my-custom-class',
+      buttons: [
+        {
+          text: 'Modifier profil',
+          icon: 'person-add-outline',
+          data: 5,
+          handler: () => {
+            this.router.navigateByUrl('/modifier-profile');
+          }
+        },
+        {
+        text: 'Deconnexion',
+        icon: 'log-out-outline',
+        data: 5,
+        handler: () => {
+          this.authService.logout();
+          this.paiementService.deleteAll();
+          this.router.navigateByUrl('/authentification');
+        },
+
+      },
+
+      {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+    const { role, data } = await actionSheet.onDidDismiss();
+    console.log('onDidDismiss resolved with role and data', role, data);
+  }
+
 }

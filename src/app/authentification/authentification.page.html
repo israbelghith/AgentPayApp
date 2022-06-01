@@ -1,8 +1,6 @@
 <ion-header  class="back-img">
   <ion-toolbar  color="dark" >
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+
     <ion-title>  <h4>PayAgent </h4></ion-title>
 
   </ion-toolbar>
@@ -19,16 +17,22 @@
           <ion-card >
             <ion-card-content>
           <div padding>
+<!-- [(ngModel)]="utilisateur.email"
+[formGroup]="ionicForm"
+formControlName="email"-->
 
             <ion-item>
               <ion-label position="floating">Email </ion-label>
-              <ion-input type="email" placeholder="exemple@gmail.com" [(ngModel)]="utilisateur.email"></ion-input>
+              <ion-input [(ngModel)]="utilisateur.email" type="email" placeholder="exemple@gmail.com"  ></ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label position="floating">Mot de Passe  </ion-label>
-              <ion-input type="password" placeholder="Insérer au moins 3 caractères" [(ngModel)]="utilisateur.motDePasse"></ion-input>
+              <ion-input [(ngModel)]="utilisateur.motDePasse" type="password" ></ion-input>
             </ion-item>
+            <span class="error ion-padding" *ngIf="errorControl.motDePasse.errors?.minlength">
+              Password needs to be 3 characters
+            </span>
 
           </div><br><br><br>
           <ion-button color="success" shape="round" (click)="connection()" expand="full"><ion-icon  name="log-in"></ion-icon> Connecter</ion-button>

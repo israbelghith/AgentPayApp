@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -21,7 +22,7 @@ export class AuthentificationPage implements OnInit {
   display = false;
   r=new Role(1,'admin');
 
-
+  ionicForm: FormGroup;
   clickAlert(){
     this.display = false;
  }
@@ -31,22 +32,34 @@ export class AuthentificationPage implements OnInit {
   constructor(private router: Router,
     private authentifierService: AuthentificationService,
     private utilisateurService: UtilisateurService,
-    private dataService: DataService)
-     { }
+    private dataService: DataService,
+    private formBuilder: FormBuilder)
+     {
+
+      }
 
   ngOnInit(): void {
+
+    this.ionicForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      motDePasse: ['', [Validators.required, Validators.minLength(3)]]
+    });
   }
+  get errorControl()
+  {
+  return this.ionicForm.controls;}
 
   connection()
-{
+{console.log(this.ionicForm.value);
     this.authentifierService.connection(this.utilisateur).subscribe((data)=> {
     const jwToken = data.headers.get('Authorization');
     this.authentifierService.saveToken(jwToken);
     this.utilisateurService.chercherParEmail(this.utilisateur.email).
     subscribe( agt =>{ this.u = agt;
     this.dataService.addAgent(agt);
+    console.log(agt);
 this.authentifierService.saveSecteur(agt.secteur);
-console.log(agt.secteur);
+console.log(agt);
     if(this.u.role.role==='agent'){
       this.router.navigate(['/folder/:id']);///folder/:id
     }

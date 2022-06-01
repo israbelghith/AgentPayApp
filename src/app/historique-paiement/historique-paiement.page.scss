@@ -1,6 +1,6 @@
 .favCard{
   width: 320px;
-  height: 260px;
+  height: 220px;
   border-radius: 10px;
  // border-color:  rgb(119, 216, 245);
  // box-shadow: -1px 3px 5px 0px rgba(133, 132, 132, 0.507);
@@ -23,13 +23,15 @@
 
 }
 ion-card {
-  border-top: 2px solid rgb(119, 216, 245);
-  border-bottom: 2px solid rgb(119, 216, 245);
-  border-left: 2px solid rgb(119, 216, 245);
-  border-right: 2px solid rgb(119, 216, 245);
+  border-top: 2px solid rgb(0, 209, 17);
+  border-bottom: 2px solid rgb(0, 209, 17);
+  border-left: 2px solid rgb(0, 209, 17);
+  border-right: 2px solid rgb(0, 209, 17);
 }
 .text{
   position: absolute;
   right: 60%;
 }
-
+.ionlabel{
+  color:rgb(0, 209, 17);
+}
