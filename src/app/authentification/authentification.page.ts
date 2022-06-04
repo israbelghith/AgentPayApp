@@ -54,14 +54,17 @@ export class AuthentificationPage implements OnInit {
     this.authentifierService.connection(this.utilisateur).subscribe((data)=> {
     const jwToken = data.headers.get('Authorization');
     this.authentifierService.saveToken(jwToken);
+
     this.utilisateurService.chercherParEmail(this.utilisateur.email).
     subscribe( agt =>{ this.u = agt;
+
     this.dataService.addAgent(agt);
-    console.log(agt);
+    console.log(this.dataService.getAgent());
 this.authentifierService.saveSecteur(agt.secteur);
 console.log(agt);
     if(this.u.role.role==='agent'){
       this.router.navigate(['/folder/:id']);///folder/:id
+      console.log(this.dataService.getAgent());
     }
 
   else{

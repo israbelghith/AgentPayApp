@@ -26,15 +26,15 @@ export class ModifierProfilePage implements OnInit {
      private paiementService: PaiementService,
     ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     /*this.utilisateurService.chercherParEmail(this.authService.loggedUser).
     subscribe( cais =>{ this.currentUtilisateur = cais;
     console.log(this.currentUtilisateur);
     console.log(this.authService.loggedUser);
     } ) ;*/
-   this.currentUtilisateur =this.dataService.getAgent();
+   this.currentUtilisateur =await this.dataService.getAgent();
 
-   console.log('logged user',this.currentUtilisateur.email);
+   console.log('logged user',this.dataService.getAgent());
   }
 
   modifierProfile(){

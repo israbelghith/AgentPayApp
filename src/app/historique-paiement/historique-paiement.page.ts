@@ -96,7 +96,7 @@ export class HistoriquePaiementPage implements OnInit {
       });
       await alert.present();
       }
-      window.location.reload();
+   //   window.location.reload();
     });
 
     return await modal.present();

@@ -35,22 +35,26 @@ agent=new Agent();
   }
 
   getAgent() {
-   // const agt=this.storage.get('agent');
-    this.storage.forEach((v,k) => {
+    const agt=this.storage.get('agent');
+   /* this.storage.forEach((v,k) => {
       if(k=== 'agent')
       {
         this.agent=v;
+        console.log(this.agent);
       }
-     });
-     return this.agent;
+     });*/
+     return agt;
   }
 
-
+getSecteur(){
+  return this.agent.secteur;
+}
 getPaiement()
 {
   return this.storage.get(STORAGE_KEY) || [];
 }
   async addData(item) {
+
     const storedData = (await this.storage.get(STORAGE_KEY)) || [];
     storedData.push(item);
     return this.storage.set(STORAGE_KEY, storedData);
@@ -61,6 +65,7 @@ getPaiement()
     await this.storage.set(id.toString(), value);
   }
   async addAgent(value: Agent) {
+    this.agent=value;
     await this.storage.set('agent', value);
   }
 

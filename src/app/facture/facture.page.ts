@@ -81,7 +81,7 @@ list3.push(i);
   }
   async addData() {
     const secteur = this.authentificationService.getSecteur();
-    this.factureService.chercherParSecteur(secteur).subscribe(async (arg) => {
+    await this.factureService.chercherParSecteur(this.dataService.getSecteur()).subscribe(async (arg) => {
       this.list = arg;
       console.log(arg);
       for (let i=0; i<arg.length;i++) {
@@ -122,7 +122,8 @@ doRefresh(event) {
 this.paiement.modePaiement='espèce';
 this.paiement.factures=this.factlist;
 this.paiement.dateP=new Date();
-this.paiement.agent= this.dataService.getAgent();
+this.paiement.agent= await this.dataService.getAgent();
+console.log('agent :',this.dataService.getAgent());
 ////
     const dataTab =
         {
@@ -143,9 +144,9 @@ this.paiement.agent= this.dataService.getAgent();
       });
 
       this.router.navigate(['/historique-paiement']).then(()=>{
-        window.location.reload();
+        //window.location.reload();
       });
-      await alert.present();
+    //  await alert.present();
     }
 //this.closeModal();
 

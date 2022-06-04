@@ -13,6 +13,7 @@ export class AuthentificationService {
 
   apiURL= 'http://localhost:8080/caisses';
   token: string;
+  agent: any;
   isloggedIn = false;
   public loggedUser: string;
   public role: string[];
@@ -55,6 +56,7 @@ export class AuthentificationService {
   }
 
   logout() {
+    this.loadToken();
     this.loggedUser = undefined;
     this.role = undefined;
     this.secteur=undefined;
@@ -94,4 +96,5 @@ export class AuthentificationService {
     return this.role.indexOf('agent') >= 0;
 
   }
+
 }

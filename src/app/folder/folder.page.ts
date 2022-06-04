@@ -18,7 +18,7 @@ export class FolderPage implements OnInit {
   currentUtilisateur = new Agent();
   bar: any=true;
   subjects;
-
+user: any;
   constructor(private activatedRoute: ActivatedRoute,
     private  dataService: DataService,
     public authService: AuthentificationService,
@@ -27,7 +27,7 @@ export class FolderPage implements OnInit {
     private paiementService: PaiementService,
     public actionSheetController: ActionSheetController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.subjects=[
       {
@@ -48,10 +48,11 @@ export class FolderPage implements OnInit {
     console.log(this.currentUtilisateur);
     console.log(this.authService.loggedUser);
     } ) ;
+    this.user=this.dataService.getAgent();
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
    // window.location.reload();
-   this.agt = this.dataService.getAgent();
-   console.log('email user',this.agt.email);
+   //this.user =   this.dataService.getAgent();
+   console.log('email user',this.user);
 
    console.log('current url',this.router.url);
   }

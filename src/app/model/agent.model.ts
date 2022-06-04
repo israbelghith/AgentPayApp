@@ -6,5 +6,6 @@ export
  Agent extends Utilisateur
 {
     secteur: string;
+  private __zone_symbol__value: any;
 
 }

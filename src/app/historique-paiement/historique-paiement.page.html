@@ -16,14 +16,14 @@
   <ion-card class="favCard"  button *ngFor="let p of listePaiement" >
     <ion-card-content >
       <h2><b>{{p.paiement.dateP|date:'dd/MM/YYYY  HH:mm'}}</b></h2><br>
-      <h2><b>Nom Client :</b> {{p.paiement.factures[0].client.nom}} {{p.paiement.factures[0].client.prenom}}</h2><br>
-
+      <h2><b>Nom Client :</b> {{p.paiement.factures[0].client.nom}} {{p.paiement.factures[0].client.prenom}}</h2>
+      <h2><b>Montant Totale : </b> {{p.totalMontant}}  DT</h2>
       <h2><b>Les Factures Payés :  </b> </h2>
 
     <ion-card-content  >
       <h2 *ngFor="let f of p.paiement.factures">Référence Facture: {{f.referenceFact}} </h2><br>
     </ion-card-content>
-    <h1><b>Montant Totale : </b> {{p.totalMontant}}  DT</h1>
+
 
   </ion-card-content>
     </ion-card>
